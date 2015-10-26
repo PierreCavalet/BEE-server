@@ -1,5 +1,7 @@
 module.exports.bee = Bee;
 
+var db = require("./db.js").db;
+
 function Bee(user, location, time, content, up, down) {
   this.user = user;
   this.location = location;
@@ -24,11 +26,11 @@ function Bee(user, location, time, content, up, down) {
 
   // persist the Bee in the database
   this.persist = function() {
-    console.log("persist!");
+    db.addBee(that);
   }
 }
 
-// return all the bees in the database
-this.getAllBees = function() {
-  console.log("get all bees");
+// send all the bees in the database through the socket
+Bee.sendAllBees = function(socket) {
+  db.sendAllBees(socket);
 }
