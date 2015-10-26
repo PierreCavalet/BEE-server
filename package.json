@@ -5,6 +5,7 @@
   "dependencies": {
     "ws": "*",
     "express": "*",
-    "socket.io": "*"
+    "socket.io": "*",
+    "mysql": "*"
   }
 }
