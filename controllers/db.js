@@ -1,6 +1,7 @@
 var mysql = require("mysql");
 var config = require("../config.json");
 var Bee = require("./bee.js").bee;
+var User = require("./user.js").user;
 
 module.exports.db = new Db();
 
@@ -12,6 +13,10 @@ function Db() {
     password: config.database_password,
     database: "bestexcuseever"
   });
+
+  //////////////////////////////////////
+  // BEE MANAGEMENT
+  /////////////////////////////////////
 
   // send all the bees in the database through the socket as a JSONArray
   this.sendAllBees = function(socket) {
@@ -49,6 +54,44 @@ function Db() {
             console.log(error);
             return;
         }
+    });
+  }
+
+  //////////////////////////////////////
+  // USER MANAGEMENT
+  /////////////////////////////////////
+
+  // add a user in the database
+  this.addUser = function(user) {
+    var query = "INSERT INTO User(account, password) "
+                + "VALUES('" + user.account + "', '" + user.password + "') ";
+
+    db.query(query, function select(error, results, fields) {
+        if (error) {
+            console.log(error);
+            return;
+        }
+    });
+  }
+
+  this.signIn = function (userJSON, socket) {
+    var query = "SELECT account"
+                    + " FROM User U"
+                    + " WHERE U.account = '" + userJSON.account + "'"
+                    + " AND U.password = '" + userJSON.password + "'";
+
+    db.query(query, function select(error, results, fields) {
+      if (error) {
+        console.log(error);
+        return;
+      }
+      if (results.length > 0) {
+        socket.user = new User(userJSON.account, userJSON.password);
+        socket.emit("signInResult", 1);
+      }
+      else {
+        socket.emit('signInResult', 0);
+      }
     });
   }
 }
