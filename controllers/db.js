@@ -62,23 +62,27 @@ function Db() {
   /////////////////////////////////////
 
   // add a user in the database
-  this.addUser = function(user) {
+  this.addUser = function(user, socket) {
     var query = "INSERT INTO User(account, password) "
                 + "VALUES('" + user.account + "', '" + user.password + "') ";
 
     db.query(query, function select(error, results, fields) {
         if (error) {
+            socket.emit('signUpResult', 0);
             console.log(error);
             return;
+        }
+        else {
+          socket.emit('signUpResult', 1);
         }
     });
   }
 
   this.signIn = function (userJSON, socket) {
     var query = "SELECT account"
-                    + " FROM User U"
-                    + " WHERE U.account = '" + userJSON.account + "'"
-                    + " AND U.password = '" + userJSON.password + "'";
+              + " FROM User U"
+              + " WHERE U.account = '" + userJSON.account + "'"
+              + " AND U.password = '" + userJSON.password + "'";
 
     db.query(query, function select(error, results, fields) {
       if (error) {

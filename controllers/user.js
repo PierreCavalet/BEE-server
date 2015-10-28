@@ -7,8 +7,8 @@ function User(account, password) {
   var that = this;
 
   // persist the user in the database
-  this.persist = function (db) {
-    db.addUser(that);
+  this.persist = function (db, socket) {
+    db.addUser(that, socket);
   }
 }
 
