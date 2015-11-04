@@ -32,3 +32,7 @@ node_modules
 
 # Parameters
 config.json
+
+# Deployment
+ssh_script.sh
+deploy.sh
