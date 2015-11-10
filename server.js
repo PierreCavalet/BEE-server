@@ -18,6 +18,11 @@ io.sockets.on('connection', function (socket) {
       Bee.sendAllBees(socket, db);
     });
 
+    // send comments of a bee through the socket as JSONArray
+    socket.on('askBeeComments' function (beeID) {
+      Comment.sendComments(beeID, socket, db);
+    });
+
     // receive a bee as JSONObject to create a bee
     socket.on('sendBee', function (beeJSON) {
       var bee = new Bee(beeJSON.user, beeJSON.location, beeJSON.time,
