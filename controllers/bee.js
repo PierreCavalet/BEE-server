@@ -1,6 +1,7 @@
 module.exports.bee = Bee;
 
-function Bee(user, location, time, content, up, down) {
+function Bee(id, user, location, time, content, up, down) {
+  this.id = id;
   this.user = user;
   this.location = location;
   this.time = time;
@@ -13,6 +14,7 @@ function Bee(user, location, time, content, up, down) {
   // convert a Bee to a JSON Object
   this.toJSON = function() {
     return {
+      id: that.id,
       user: that.user,
       location: that.location,
       time: that.time,

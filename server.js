@@ -25,7 +25,7 @@ io.sockets.on('connection', function (socket) {
 
     // receive a bee as JSONObject to create a bee
     socket.on('sendBee', function (beeJSON) {
-      var bee = new Bee(beeJSON.user, beeJSON.location, beeJSON.time,
+      var bee = new Bee(0, beeJSON.user, beeJSON.location, beeJSON.time,
         beeJSON.content, beeJSON.up, beeJSON.down);
       bee.persist(db);
     });
