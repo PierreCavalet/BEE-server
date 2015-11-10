@@ -19,7 +19,7 @@ io.sockets.on('connection', function (socket) {
     });
 
     // send comments of a bee through the socket as JSONArray
-    socket.on('askBeeComments' function (beeID) {
+    socket.on('askBeeComments', function (beeID) {
       Comment.sendComments(beeID, socket, db);
     });
 

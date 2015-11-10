@@ -24,6 +24,6 @@ function Comment(content, idUser, idBee, time) {
 	}
 }
 
-Comment.sendComments(beeID, socket, db) {
+Comment.sendComments = function(beeID, socket, db) {
 	db.sendComments(beeID, socket);
 }
