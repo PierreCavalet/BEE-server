@@ -66,7 +66,7 @@ function Db() {
 
 	// send all the bees in the database through the socket as a JSONArray
 	this.sendComments = function(beeID, socket) {
-    	var query = "SELECT * FROM comment WHERE id_bee = '" + beeID + "'";
+    	var query = "SELECT C.content, U.account C.id_bee, C.time FROM comment C, user U WHERE id_bee = " + beeID;
     	// execute query
     	db.query(query, function select(error, results, fields) {
     		if (error) {
@@ -77,7 +77,7 @@ function Db() {
     		// put each comment in a JSON array
     		var commentsJSONArray = [];
         	for (var i = 0; i < results.length; i++) {
-        		var comment = new Comment(results[i]['content'], results[i]['id_user'],
+        		var comment = new Comment(results[i]['content'], results[i]['account'],
         			results[i]['id_bee'], results[i]['time']);
         		commentsJSONArray.push(comment.toJSON());
     		}

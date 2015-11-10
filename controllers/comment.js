@@ -1,8 +1,8 @@
 module.exports.comment = Comment;
 
-function Comment(content, idUser, idBee, time) {
+function Comment(content, user, idBee, time) {
 	this.content = content;
-	this.idUser = idUser;
+	this.user = user;
 	this.idBee = idBee;
 	this.time = time;
 
@@ -12,7 +12,7 @@ function Comment(content, idUser, idBee, time) {
 	this.toJSON = function() {
 		return {
 			time: that.time,
-			idUser: that.idUser,
+			user: that.user,
 			idBee: that.idBee,
 			time: that.time
 		}
