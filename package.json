@@ -1,13 +1,13 @@
 {
-  "name": "BEE-server",
-  "description": "Best Excuse Ever Node.js server",
-  "version": "0.0.1",
-  "author": "Pierre Cavalet",
-  "dependencies": {
-    "ws": "*",
-    "express": "*",
-    "socket.io": "*",
-    "mysql": "*",
-    "forever": "*"
-  }
+    "name": "BEE-server",
+    "description": "Best Excuse Ever Node.js server",
+    "version": "0.0.1",
+    "author": "Pierre Cavalet",
+    "dependencies": {
+        "ws": "*",
+        "express": "*",
+        "socket.io": "*",
+        "mysql": "*",
+        "forever": "*"
+    }
 }
