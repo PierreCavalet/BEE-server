@@ -83,7 +83,7 @@ function Db() {
     		}
 
     		// send bees as JSON array
-    		socket.emit('beeCommentsList', beesJSONArray);
+    		socket.emit('beeCommentsList', commentsJSONArray);
     	});
 	}
 
