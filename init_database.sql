@@ -30,10 +30,10 @@ CREATE TABLE user (
     PRIMARY KEY(ID)
 );
 
-INSERT INTO User(account, password)
+INSERT INTO user(account, password)
 VALUES ("Pierre", "Pierre");
 
-INSERT INTO User(account, password)
+INSERT INTO user(account, password)
 VALUES ("Nicolas", "Nicolas");
 
 
