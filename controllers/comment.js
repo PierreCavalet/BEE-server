@@ -11,7 +11,7 @@ function Comment(content, user, idBee, time) {
 	// convert a Comment to a JSON Object
 	this.toJSON = function() {
 		return {
-			time: that.time,
+			content: that.content,
 			user: that.user,
 			idBee: that.idBee,
 			time: that.time
