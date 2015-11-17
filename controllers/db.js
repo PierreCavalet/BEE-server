@@ -32,7 +32,7 @@ function Db() {
     		// put each bee in a JSON array
     		var beesJSONArray = [];
     		for (var i = 0; i < results.length; i++) {
-            	var bee = new Bee(results[i]['id'], results[i]['user'],
+            	var bee = new Bee(results[i]['ID'], results[i]['user'],
                     results[i]['location'],results[i]['time'],
                     results[i]['content'], results[i]['up'],
                     results[i]['down']);
