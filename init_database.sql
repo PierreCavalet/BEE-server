@@ -22,6 +22,23 @@ INSERT INTO bee(user, location, time, content, up, down)
 VALUES ("Nicolas", "location", "2015-04-02 10:00:00",
 "Je rêve de soleil parce que je trouve ça beau.", 30, 2);
 
+INSERT INTO bee(user, location, time, content, up, down)
+VALUES ("Pierre", "Perpignan", "2015-04-02 08:49:43",
+"Mon rêve le plus fou, c'est chez afflelou!", 10, 20);
+
+INSERT INTO bee(user, location, time, content, up, down)
+VALUES ("Pierre", "Perpignan", "2015-04-02 08:49:43",
+"Mon rêve le plus fou, c'est chez afflelou!", 10, 20);
+
+INSERT INTO bee(user, location, time, content, up, down)
+VALUES ("Pierre", "Perpignan", "2015-04-02 08:49:43",
+"Mon rêve le plus fou, c'est chez afflelou!", 10, 20);
+
+INSERT INTO bee(user, location, time, content, up, down)
+VALUES ("Pierre", "Perpignan", "2015-04-02 08:49:43",
+"Mon rêve le plus fou, c'est chez afflelou!", 10, 20);
+
+
 
 CREATE TABLE user (
     ID int NOT NULL AUTO_INCREMENT,
