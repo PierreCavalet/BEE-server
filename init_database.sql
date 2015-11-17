@@ -37,12 +37,12 @@ INSERT INTO user(account, password)
 VALUES ("Nicolas", "Nicolas");
 
 
-CREATE TABLE comment {
+CREATE TABLE comment (
     content text,
     id_user int,
     id_bee int,
     time datetime
-}
+)
 
 INSERT INTO comment(content, id_user, id_bee, time)
 VALUES("le petit commentaire de pierre", 1, 1, "2015-04-02 18:00:00");
