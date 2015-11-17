@@ -6,6 +6,7 @@ var io = require('socket.io')(server);
 var Bee = require('./controllers/bee.js').bee;
 var User = require('./controllers/user.js').user;
 var db = require("./controllers/db.js").db;
+var Comment = require("./controllers/comment.js").comment;
 
 // sockets handler
 io.sockets.on('connection', function (socket) {
