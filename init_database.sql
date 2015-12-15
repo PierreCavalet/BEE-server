@@ -16,7 +16,7 @@ CREATE TABLE bee (
 
 INSERT INTO bee(user, location, time, content, up, down)
 VALUES ("Pierre", "Perpignan", "2015-04-02 08:49:43",
-"Mon rêve le plus fou, c'est chez afflelou!", 10, 20);
+"Je fais un texte long parce que j'ai besoin de tester si les petites cartes que j'ai faite se remplissent correctement. Si ce n'est pas le cas je serais très deçu ... quelle tristesse. Cette petite histoire ne sert pas à grand chose mais je suis content de l'avoir écrite. Alors je vomi. J'espere pour vous que vous comprennez. Si ce n'est pas le cas, je vous suggère d'agrandir votre culture mes amis. Mon texte n'était pas assez long alors je rajoute une petite phrase tranquille tavu. Je pense meme qu'une deuxieme ça sera pas du luxe tavubis. tavubis ça sonne trop ejip sien wewe. Franchement jsuis trop toutankamoN. Adieu ou à bientôt, peu importe à présent. Ce monde n'existe pas.", 10, 20);
 
 INSERT INTO bee(user, location, time, content, up, down)
 VALUES ("Nicolas", "location", "2015-04-02 10:00:00",
