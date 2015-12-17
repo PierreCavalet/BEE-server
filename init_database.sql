@@ -63,3 +63,18 @@ CREATE TABLE comment (
 
 INSERT INTO comment(content, id_user, id_bee, time)
 VALUES("le petit commentaire de pierre", 1, 1, "2015-04-02 18:00:00");
+
+INSERT INTO comment(content, id_user, id_bee, time)
+VALUES("le petit commentaire de pierre 2", 1, 1, "2015-04-02 19:00:00");
+
+INSERT INTO comment(content, id_user, id_bee, time)
+VALUES("le petit commentaire de pierre 3", 1, 1, "2015-04-02 20:00:00");
+
+INSERT INTO comment(content, id_user, id_bee, time)
+VALUES("le petit commentaire de pierre 4", 1, 1, "2015-04-02 21:00:00");
+
+INSERT INTO comment(content, id_user, id_bee, time)
+VALUES("le petit commentaire de pierre 5", 1, 1, "2015-04-02 22:00:00");
+
+INSERT INTO comment(content, id_user, id_bee, time)
+VALUES("le petit commentaire de pierre 6", 1, 1, "2015-04-02 23:00:00");
