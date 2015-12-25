@@ -29,7 +29,7 @@ io.sockets.on('connection', function (socket) {
     socket.on('sendBee', function (beeJSON) {
         var bee = new Bee(0, beeJSON.user, beeJSON.location, beeJSON.time,
         beeJSON.content, beeJSON.up, beeJSON.down);
-        bee.persist(db, sockets);
+        bee.persist(db, io.sockets);
     });
 
     // receive a user as a JSONObject to create a user
