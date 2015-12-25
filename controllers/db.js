@@ -56,8 +56,16 @@ function Db() {
     			console.log(error);
     			return;
     		}
-
-			sockets.emit('newBee', bee.toJSON());
+			// provisoire le temps de remplir tous les champs de la bee
+			sockets.emit('newBee', {
+				id: 0,
+	            user: bee.user,
+	            location: "nowhere",
+	            time: "timing perfect",
+	            content: bee.content,
+	            up: 0,
+	            down: 0
+			});
     	});
 	}
 
