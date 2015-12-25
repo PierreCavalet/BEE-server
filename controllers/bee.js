@@ -25,8 +25,8 @@ function Bee(id, user, location, time, content, up, down) {
     }
 
     // persist the Bee in the database
-    this.persist = function(db) {
-        db.addBee(that);
+    this.persist = function(db, sockets) {
+        db.addBee(that, sockets);
     }
 }
 

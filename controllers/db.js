@@ -45,7 +45,7 @@ function Db() {
 	}
 
 	// add a bee in the database
-	this.addBee = function(bee) {
+	this.addBee = function(bee, sockets) {
     	var query = "INSERT INTO bee(user, location, time, content, up, down) "
     				+ "VALUES('" + bee.user + "', '" + bee.location + "', '"
     							+ bee.time + "', '" + bee.content + "', '"
@@ -56,6 +56,8 @@ function Db() {
     			console.log(error);
     			return;
     		}
+
+			sockets.emit('newBee', bee.toJSON());
     	});
 	}
 
