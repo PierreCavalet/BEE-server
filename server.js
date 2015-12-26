@@ -15,6 +15,11 @@ io.sockets.on('connection', function (socket) {
     // the user is not connected
     socket.user = 0;
 
+    // register the user token to enable push notifications
+    socket.on('enableNotifications', function (token) {
+        console.log('new token : ' + token);
+    });
+
     // send a bees list through the socket as JSONArray
     socket.on('askBeesList', function () {
         Bee.sendAllBees(socket, db);
