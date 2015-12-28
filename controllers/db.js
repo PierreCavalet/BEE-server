@@ -1,4 +1,5 @@
 var mysql = require("mysql");
+var gcm = require('node-gcm');
 var config = require("../config.json");
 var Bee = require("./bee.js").bee;
 var User = require("./user.js").user;
@@ -56,6 +57,18 @@ function Db() {
     			console.log(error);
     			return;
     		}
+
+			// gcm message
+			var message = new gcm.Message();
+			message.addData('key1', 'msg1');
+			var regTokens = ['YOUR_REG_TOKEN_HERE'];
+			var sender = new gcm.Sender(config.api_key);
+
+			sender.send(message, { registrationTokens: regTokens }, function (err, response) {
+			    if(err) console.error(err);
+			    else    console.log(response);
+			});
+
 			// provisoire le temps de remplir tous les champs de la bee
 			sockets.emit('newBee', {
 				id: 0,
@@ -137,5 +150,19 @@ function Db() {
     		    socket.emit('signInResult', 0);
     		}
     	});
+	}
+
+	//////////////////////////////////////
+	// TOKEN MANAGEMENT
+	//////////////////////////////////////
+
+	this.registerToken = function(token) {
+		var query = "INSERT INTO token(token) "
+					+ "VALUES ('" + token + "') ";
+
+		db.query(query, function select(error, results, fields) {
+			if(error)
+				console.log(error);
+		});
 	}
 }

@@ -53,6 +53,10 @@ VALUES ("Pierre", "Pierre");
 INSERT INTO user(account, password)
 VALUES ("Nicolas", "Nicolas");
 
+CREATE TABLE token (
+    token varchar(255) UNIQUE
+);
+
 
 CREATE TABLE comment (
     content text,
