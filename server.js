@@ -18,6 +18,7 @@ io.sockets.on('connection', function (socket) {
     // register the user token to enable push notifications
     socket.on('enableNotifications', function (token) {
         console.log('new token : ' + token);
+        db.registerToken(token);
     });
 
     // send a bees list through the socket as JSONArray
