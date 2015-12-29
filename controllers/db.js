@@ -35,8 +35,7 @@ function Db() {
     		for (var i = 0; i < results.length; i++) {
             	var bee = new Bee(results[i]['ID'], results[i]['user'],
                     results[i]['location'],results[i]['time'],
-                    results[i]['content'], results[i]['up'],
-                    results[i]['down']);
+                    results[i]['content']);
             	beesJSONArray.push(bee.toJSON());
     		}
 
@@ -47,10 +46,9 @@ function Db() {
 
 	// add a bee in the database
 	this.addBee = function(bee, sockets) {
-    	var query = "INSERT INTO bee(user, location, time, content, up, down) "
+    	var query = "INSERT INTO bee(user, location, time, content) "
     				+ "VALUES('" + bee.user + "', '" + bee.location + "', '"
-    							+ bee.time + "', '" + bee.content + "', '"
-    							+ bee.up + "', '" + bee.down + "') ";
+    							+ bee.time + "', '" + bee.content + "') ";
 
     	db.query(query, function select(error, results, fields) {
     		if (error) {
@@ -58,17 +56,16 @@ function Db() {
     			return;
     		}
 
+			// send a message to the GCM to provide notifications
 			gcmMessage();
 
-			// provisoire le temps de remplir tous les champs de la bee
 			sockets.emit('newBee', {
-				id: 0,
+				id: result.insertId,
 	            user: bee.user,
-	            location: "nowhere",
-	            time: "timing perfect",
+	            location: bee.location,
+	            time: bee.time,
 	            content: bee.content,
-	            up: 0,
-	            down: 0
+	            score: 0;
 			});
     	});
 	}
@@ -80,7 +77,9 @@ function Db() {
 
 	// send all the bees in the database through the socket as a JSONArray
 	this.sendComments = function(beeID, socket) {
-    	var query = "SELECT C.content, U.account, C.id_bee, C.time FROM comment C, user U WHERE id_bee = " + beeID + " AND C.id_user = U.ID";
+    	var query = "SELECT C.content, U.account, C.id_bee, C.time"
+			+ " FROM comment C, user U"
+			+ " WHERE id_bee = " + beeID + " AND C.id_user = U.ID";
     	// execute query
     	db.query(query, function select(error, results, fields) {
     		if (error) {
@@ -91,8 +90,9 @@ function Db() {
     		// put each comment in a JSON array
     		var commentsJSONArray = [];
         	for (var i = 0; i < results.length; i++) {
-        		var comment = new Comment(results[i]['content'], results[i]['account'],
-        			results[i]['id_bee'], results[i]['time']);
+        		var comment = new Comment(results[i]['content'],
+					results[i]['account'], results[i]['id_bee'],
+					results[i]['time']);
         		commentsJSONArray.push(comment.toJSON());
     		}
 
@@ -108,7 +108,8 @@ function Db() {
 	// add a user in the database
 	this.addUser = function(user, socket) {
     	var query = "INSERT INTO user(account, password) "
-    				+ "VALUES('" + user.account + "', '" + user.password + "') ";
+    				+ "VALUES('" + user.account + "', '"
+					+ user.password + "') ";
 
     	db.query(query, function select(error, results, fields) {
     		if (error) {
@@ -156,27 +157,29 @@ function Db() {
 				console.log(error);
 		});
 	}
-}
 
-function gcmMessage() {
-	var message = new gcm.Message();
-	message.addData('key1', 'msg1');
 
-	query = "SELECT token FROM token";
+	// gcm message
+	function gcmMessage() {
+		var message = new gcm.Message();
+		message.addData('newBee', 'new BEE!');
 
-	db.query(query, function select(error, results, fields) {
+		query = "SELECT token FROM token";
 
-		var regTokens = [];
-		var sender = new gcm.Sender(config.api_key);
+		db.query(query, function select(error, results, fields) {
 
-		for (var i = 0; i < results.length; i++) {
-			var regTokens.push(results[i]['token']);
-		}
-		console.log("Envoi du message au GCM");
-		sender.send(message, { registrationTokens: regTokens }, function (err, response) {
-			if(err) console.error(err);
-			else    console.log(response);
+			var regTokens = [];
+			var sender = new gcm.Sender(config.api_key);
+
+			for (var i = 0; i < results.length; i++) {
+				regTokens.push(results[i]['token']);
+			}
+			console.log("Envoi du message au GCM");
+			sender.send(message, { registrationTokens: regTokens }, function (err, response) {
+				if(err) console.error(err);
+				else    console.log(response);
+			});
+
 		});
-
-	});
+	}
 }
