@@ -58,16 +58,7 @@ function Db() {
     			return;
     		}
 
-			// gcm message
-			var message = new gcm.Message();
-			message.addData('key1', 'msg1');
-			var regTokens = ['YOUR_REG_TOKEN_HERE'];
-			var sender = new gcm.Sender(config.api_key);
-
-			sender.send(message, { registrationTokens: regTokens }, function (err, response) {
-			    if(err) console.error(err);
-			    else    console.log(response);
-			});
+			gcmMessage();
 
 			// provisoire le temps de remplir tous les champs de la bee
 			sockets.emit('newBee', {
@@ -165,4 +156,27 @@ function Db() {
 				console.log(error);
 		});
 	}
+}
+
+function gcmMessage() {
+	var message = new gcm.Message();
+	message.addData('key1', 'msg1');
+
+	query = "SELECT token FROM token";
+
+	db.query(query, function select(error, results, fields) {
+
+		var regTokens = [];
+		var sender = new gcm.Sender(config.api_key);
+
+		for (var i = 0; i < results.length; i++) {
+			var regTokens[] = results[i]['token'];
+		}
+		console.log("Envoi du message au GCM");
+		sender.send(message, { registrationTokens: regTokens }, function (err, response) {
+			if(err) console.error(err);
+			else    console.log(response);
+		});
+
+	});
 }
