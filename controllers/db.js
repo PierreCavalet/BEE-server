@@ -170,7 +170,7 @@ function gcmMessage() {
 		var sender = new gcm.Sender(config.api_key);
 
 		for (var i = 0; i < results.length; i++) {
-			var regTokens[] = results[i]['token'];
+			var regTokens.push(results[i]['token']);
 		}
 		console.log("Envoi du message au GCM");
 		sender.send(message, { registrationTokens: regTokens }, function (err, response) {
