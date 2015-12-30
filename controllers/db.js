@@ -149,13 +149,36 @@ function Db() {
 	//////////////////////////////////////
 
 	this.rateBee = function(id_user, id_bee, value) {
-		var query = "INSERT INTO rate(id_user, id_bee, value) "
-					+ "VALUES (" + id_user + ", " + id_bee + ", "+ value + ") ";
+		var testQuery = "SELECT *"
+						+ " FROM rate"
+						+ " WHERE id_user = " + id_user
+						+ " AND id_bee = " + id_bee;
 
-		db.query(query, function select(error, results, fields) {
-			if(error)
+		db.query(testQuery, function select(error, results, fields) {
+			if (error)
 				console.log(error);
+			if(results.length > 0) {
+				var updateQuery = "UPDATE rate"
+							+ " SET value = " + value
+							+ " WHERE id_user = " + id_user
+							+ " AND id_bee = " + id_bee;
+
+				db.query(updateQuery, function select(error, results, fields) {
+					if(error)
+						console.log(error);
+				});
+			} else {
+				var insertQuery = "INSERT INTO rate(id_user, id_bee, value) "
+							+ "VALUES (" + id_user + ", " + id_bee + ", "+ value + ") ";
+
+				db.query(insertQuery, function select(error, results, fields) {
+					if(error)
+						console.log(error);
+				});
+			}
+
 		});
+
 	}
 
 	//////////////////////////////////////
