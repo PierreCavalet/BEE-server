@@ -1,12 +1,12 @@
 module.exports.bee = Bee;
 
-function Bee(id, user, location, time, content, score = 0) {
+function Bee(id, user, location, time, content, score) {
     this.id = id;
     this.user = user;
     this.location = location;
     this.time = time;
     this.content = content;
-    this.score = score;
+    this.score = score || 0;
 
     var that = this;
 

@@ -24,7 +24,11 @@ INSERT INTO bee(user, location, time, content)
 VALUES ("Mélanie", "Perpignan", "2015-07-03 08:49:43",
 "Aujourd'hui, excuse de mon fils concernant sa copine : \"C'est une amie qui avait perdu ses clés. Vu qu'elle ne voulait pas froisser ses fringues, et moi non plus, on s'est foutus à poil et on a dormi dans le même lit pour ne pas avoir froid...\" Maintenant, c'est sûr, il me prend vraiment pour un con. Best Excuse Ever.");
 
-
+CREATE TABLE like (
+    id_user int,
+    id_bee int,
+    value int
+)
 
 CREATE TABLE user (
     ID int NOT NULL AUTO_INCREMENT,

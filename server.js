@@ -31,6 +31,11 @@ io.sockets.on('connection', function (socket) {
         Comment.sendComments(beeID, socket, db);
     });
 
+    // receive a like as JSONObject
+    socket.on('likeBee', function(likeJSON) {
+        db.likeBee(socket.user.id, likeJSON.id_bee, likeJSON.value);
+    });
+
     // receive a bee as JSONObject to create a bee
     socket.on('sendBee', function (beeJSON) {
         var bee = new Bee(0, beeJSON.user, beeJSON.location, beeJSON.time,

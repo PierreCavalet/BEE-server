@@ -1,6 +1,7 @@
 module.exports.user = User;
 
-function User(account, password) {
+function User(id, account, password) {
+    this.id = id;
     this.account = account;
     this.password = password;
 

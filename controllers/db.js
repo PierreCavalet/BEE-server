@@ -65,7 +65,7 @@ function Db() {
 	            location: bee.location,
 	            time: bee.time,
 	            content: bee.content,
-	            score: 0;
+	            score: 0
 			});
     	});
 	}
@@ -124,7 +124,7 @@ function Db() {
 	}
 
 	this.signIn = function (userJSON, socket) {
-    	var query = "SELECT account"
+    	var query = "SELECT ID"
     				+ " FROM user U"
     				+ " WHERE U.account = '" + userJSON.account + "'"
     				+ " AND U.password = '" + userJSON.password + "'";
@@ -135,13 +135,27 @@ function Db() {
         		return;
     		}
     		if (results.length > 0) {
-        		socket.user = new User(userJSON.account, userJSON.password);
+        		socket.user = new User(results[0]['ID'], userJSON.account, userJSON.password);
         		socket.emit("signInResult", 1);
     		}
     		else {
     		    socket.emit('signInResult', 0);
     		}
     	});
+	}
+
+	//////////////////////////////////////
+	// LIKE MANAGEMENT
+	//////////////////////////////////////
+
+	this.likeBee = function(id_user, id_bee, value) {
+		var query = "INSERT INTO like(id_user, id_bee, value) "
+					+ "VALUES (" + id_user + ", " + id_bee + ", "+ value + ") ";
+
+		db.query(query, function select(error, results, fields) {
+			if(error)
+				console.log(error);
+		});
 	}
 
 	//////////////////////////////////////
