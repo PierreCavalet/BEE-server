@@ -22,7 +22,21 @@ function Db() {
 
 	// send all the bees in the database through the socket as a JSONArray
 	this.sendAllBees = function(socket) {
-    	var query = "SELECT * FROM bee";
+		var id_user = 0;
+		if(socket.user != 0) {
+			id_user = socket.user.id;
+		}
+		var query = " (SELECT B.ID, B.user, B.location, B.time, B.content, R.value"
+			+ " FROM bee B, rate R"
+			+ " WHERE R.id_user = " + id_user + " AND R.id_bee = B.ID)"
+			+ " UNION"
+			+ " (SELECT B1.ID, B1.user, B1.location, B1.time, B1.content, 0"
+			+ " FROM bee B1"
+			+ " WHERE B1.ID NOT IN("
+						+ " SELECT B2.ID"
+						+ " FROM bee B2, rate R2"
+						+ " WHERE R2.id_user = " + id_user + " AND R2.id_bee = B2.ID))";
+
     	// execute query
     	db.query(query, function select(error, results, fields) {
     		if (error) {
@@ -33,10 +47,10 @@ function Db() {
     		// put each bee in a JSON array
     		var beesJSONArray = [];
     		for (var i = 0; i < results.length; i++) {
-            	var bee = new Bee(results[i]['ID'], results[i]['user'],
-                    results[i]['location'],results[i]['time'],
-                    results[i]['content']);
-            	beesJSONArray.push(bee.toJSON());
+				var bee = new Bee(results[i]['ID'], results[i]['user'],
+					results[i]['location'],results[i]['time'],
+					results[i]['content'], results[i]['value']);
+				beesJSONArray.push(bee.toJSON());
     		}
 
     		// send bees as JSON array
