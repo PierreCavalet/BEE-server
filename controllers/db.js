@@ -145,11 +145,11 @@ function Db() {
 	}
 
 	//////////////////////////////////////
-	// LIKE MANAGEMENT
+	// RATE MANAGEMENT
 	//////////////////////////////////////
 
-	this.likeBee = function(id_user, id_bee, value) {
-		var query = "INSERT INTO like(id_user, id_bee, value) "
+	this.rateBee = function(id_user, id_bee, value) {
+		var query = "INSERT INTO rate(id_user, id_bee, value) "
 					+ "VALUES (" + id_user + ", " + id_bee + ", "+ value + ") ";
 
 		db.query(query, function select(error, results, fields) {

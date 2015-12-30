@@ -32,8 +32,10 @@ io.sockets.on('connection', function (socket) {
     });
 
     // receive a like as JSONObject
-    socket.on('likeBee', function(likeJSON) {
-        db.likeBee(socket.user.id, likeJSON.id_bee, likeJSON.value);
+    socket.on('rateBee', function(likeJSON) {
+        if(socket.user != 0) {
+            db.rateBee(socket.user.id, likeJSON.bee_id, likeJSON.rate);
+        }
     });
 
     // receive a bee as JSONObject to create a bee
