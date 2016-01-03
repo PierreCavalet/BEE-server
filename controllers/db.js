@@ -130,6 +130,24 @@ function Db() {
     	});
 	}
 
+	this.addComment = function(comment) {
+    	var query = "INSERT INTO comment(content, id_user, id_bee, time) "
+    				+ "VALUES('" + comment.content + "', '"
+					+ comment.user + "', '" + comment.idBee
+					+ "', NOW()) ";
+
+    	db.query(query, function select(error, results, fields) {
+    		if (error) {
+    			socket.emit('signUpResult', 0);
+    			console.log(error);
+    			return;
+    		}
+    		else {
+    			socket.emit('signUpResult', 1);
+    		}
+    	});
+	}
+
 	//////////////////////////////////////
 	// USER MANAGEMENT
 	/////////////////////////////////////

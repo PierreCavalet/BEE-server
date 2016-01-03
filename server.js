@@ -45,6 +45,14 @@ io.sockets.on('connection', function (socket) {
         bee.persist(db, io.sockets);
     });
 
+    // receive a comment as JSONObject to create a comment
+    socket.on('sendComments', function(commentJSON) {
+        if(socket.user != 0) {
+            var comment = new Comment(commentJSON.content, socket.user.id, commentJSON.idbee);
+            comment.persist(db);
+        }
+    })
+
     // receive a user as a JSONObject to create a user
     socket.on('signUp', function (userJSON) {
         var user = new User(userJSON.account, userJSON.password);
