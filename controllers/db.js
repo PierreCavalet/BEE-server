@@ -79,7 +79,7 @@ function Db() {
     				+ "VALUES('" + bee.user + "', '" + bee.location + "', '"
     							+ bee.time + "', '" + bee.content + "') ";
 
-    	db.query(query, function select(error, results, fields) {
+    	db.query(query, function select(error, result, fields) {
     		if (error) {
     			console.log(error);
     			return;
