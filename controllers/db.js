@@ -88,7 +88,7 @@ function Db() {
 
 			// send a message to the GCM to provide notifications
 			gcmMessage();
-
+			console.log(result);
 			sockets.emit('newBee', {
 				id: result.insertId,
 	            user: bee.user,
