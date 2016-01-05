@@ -4,7 +4,7 @@ function Bee(id, user, location, time, content, score) {
     this.id = id;
     this.user = user;
     this.location = location;
-    this.time = time;
+    this.time = time || "";
     this.content = content;
     this.score = score || 0;
 
