@@ -55,7 +55,7 @@ io.sockets.on('connection', function (socket) {
 
     // receive a user as a JSONObject to create a user
     socket.on('signUp', function (userJSON) {
-        var user = new User(userJSON.account, userJSON.password);
+        var user = new User(0, userJSON.account, userJSON.password);
         user.persist(db, socket);
     });
 

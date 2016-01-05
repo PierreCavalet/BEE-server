@@ -29,7 +29,7 @@ function Db() {
 
 		var query = "(SELECT B.ID, B.user, B.location, B.time, B.content, SUM(R2.value) as score, R1.value"
 			+ " FROM bee B, rate R1, rate R2"
-			+ " WHERE R1.id_user = " + id_user + " AND R1.id_bee = B.ID AND R2.id_bee = B.ID"
+			+ " WHERE R1.id_user = " + db.escape(id_user) + " AND R1.id_bee = B.ID AND R2.id_bee = B.ID"
 			+ " GROUP BY B.ID"
 			+ " HAVING score IS NOT NULL)"
 			+ "	UNION"
@@ -38,7 +38,7 @@ function Db() {
 			+ " WHERE R3.id_bee = B1.ID AND B1.ID NOT IN"
 		        			+ " (SELECT B2.ID"
 		        			+ " FROM bee B2, rate R2"
-		        			+ " WHERE R2.id_user = " + id_user + " AND R2.id_bee = B2.ID)"
+		        			+ " WHERE R2.id_user = " + db.escape(id_user) + " AND R2.id_bee = B2.ID)"
 			+ " GROUP BY B1.ID"
 			+ " HAVING score IS NOT NULL)"
 			+ " UNION"
@@ -76,8 +76,9 @@ function Db() {
 	// add a bee in the database
 	this.addBee = function(bee, sockets) {
     	var query = "INSERT INTO bee(user, location, time, content) "
-    				+ "VALUES('" + bee.user + "', '" + bee.location + "', '"
-    							+ bee.time + "', '" + bee.content + "') ";
+    				+ "VALUES(" + db.escape(bee.user) + ", "
+					+ db.escape(bee.location) + ", NOW(),"
+    				+ db.escape(bee.content) + ") ";
 
     	db.query(query, function select(error, result, fields) {
     		if (error) {
@@ -94,7 +95,8 @@ function Db() {
 	            location: bee.location,
 	            time: bee.time,
 	            content: bee.content,
-	            score: 0
+	            score: 0,
+				myScore: 0
 			});
     	});
 	}
@@ -108,7 +110,7 @@ function Db() {
 	this.sendComments = function(beeID, socket) {
     	var query = "SELECT C.content, U.account, C.id_bee, C.time"
 			+ " FROM comment C, user U"
-			+ " WHERE id_bee = " + beeID + " AND C.id_user = U.ID";
+			+ " WHERE id_bee = " + db.escape(beeID) + " AND C.id_user = U.ID";
     	// execute query
     	db.query(query, function select(error, results, fields) {
     		if (error) {
@@ -132,9 +134,9 @@ function Db() {
 
 	this.addComment = function(comment) {
     	var query = "INSERT INTO comment(content, id_user, id_bee, time) "
-    				+ "VALUES('" + comment.content + "', '"
-					+ comment.user + "', '" + comment.idBee
-					+ "', NOW()) ";
+    				+ "VALUES(" + db.escape(comment.content) + ", "
+					+ db.escape(comment.user) + ", " + db.escape(comment.idBee)
+					+ ", NOW()) ";
 
     	db.query(query, function select(error, results, fields) {
     		if (error) {
@@ -155,8 +157,8 @@ function Db() {
 	// add a user in the database
 	this.addUser = function(user, socket) {
     	var query = "INSERT INTO user(account, password) "
-    				+ "VALUES('" + user.account + "', '"
-					+ user.password + "') ";
+    				+ "VALUES(" + db.escape(user.account) + ", "
+					+ db.escape(user.password) + ") ";
 
     	db.query(query, function select(error, results, fields) {
     		if (error) {
@@ -173,8 +175,8 @@ function Db() {
 	this.signIn = function (userJSON, socket) {
     	var query = "SELECT ID"
     				+ " FROM user U"
-    				+ " WHERE U.account = '" + userJSON.account + "'"
-    				+ " AND U.password = '" + userJSON.password + "'";
+    				+ " WHERE U.account = " + db.escape(userJSON.account)
+    				+ " AND U.password = " + db.escape(userJSON.password);
 
     	db.query(query, function select(error, results, fields) {
     		if (error) {
@@ -198,17 +200,17 @@ function Db() {
 	this.rateBee = function(id_user, id_bee, value) {
 		var testQuery = "SELECT *"
 						+ " FROM rate"
-						+ " WHERE id_user = " + id_user
-						+ " AND id_bee = " + id_bee;
+						+ " WHERE id_user = " + db.escape(id_user)
+						+ " AND id_bee = " + db.escape(id_bee);
 
 		db.query(testQuery, function select(error, results, fields) {
 			if (error)
 				console.log(error);
 			if(results.length > 0) {
 				var updateQuery = "UPDATE rate"
-							+ " SET value = " + value
-							+ " WHERE id_user = " + id_user
-							+ " AND id_bee = " + id_bee;
+							+ " SET value = " + db.escape(value)
+							+ " WHERE id_user = " + db.escape(id_user)
+							+ " AND id_bee = " + db.escape(id_bee);
 
 				db.query(updateQuery, function select(error, results, fields) {
 					if(error)
@@ -216,14 +218,14 @@ function Db() {
 				});
 			} else {
 				var insertQuery = "INSERT INTO rate(id_user, id_bee, value) "
-							+ "VALUES (" + id_user + ", " + id_bee + ", "+ value + ") ";
+							+ "VALUES (" + db.escape(id_user) + ", "
+							+ db.escape(id_bee) + ", "+ db.escape(value) + ") ";
 
 				db.query(insertQuery, function select(error, results, fields) {
 					if(error)
 						console.log(error);
 				});
 			}
-
 		});
 
 	}
@@ -234,7 +236,7 @@ function Db() {
 
 	this.registerToken = function(token) {
 		var query = "INSERT INTO token(token) "
-					+ "VALUES ('" + token + "') ";
+					+ "VALUES (" + db.escape(token) + ") ";
 
 		db.query(query, function select(error, results, fields) {
 			if(error)
