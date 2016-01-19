@@ -137,14 +137,9 @@ function Db() {
 					+ "', NOW()) ";
 
     	db.query(query, function select(error, results, fields) {
-    		if (error) {
-    			socket.emit('signUpResult', 0);
+    		if (error)
     			console.log(error);
-    			return;
-    		}
-    		else {
-    			socket.emit('signUpResult', 1);
-    		}
+
     	});
 	}
 
