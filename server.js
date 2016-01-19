@@ -48,6 +48,7 @@ io.sockets.on('connection', function (socket) {
     // receive a comment as JSONObject to create a comment
     socket.on('sendComments', function(commentJSON) {
         if(socket.user != 0) {
+            console.log(socket.user.account + " " + commentJSON.content);
             var comment = new Comment(commentJSON.content, socket.user.id, commentJSON.idbee);
             comment.persist(db);
         }
