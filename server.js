@@ -48,6 +48,7 @@ io.sockets.on('connection', function (socket) {
     // receive a comment as JSONObject to create a comment
     socket.on('sendComments', function(commentJSON) {
         if(socket.user != 0) {
+            console.log(socket.user.account + " " + commentJSON.content);
             var comment = new Comment(commentJSON.content, socket.user.id, commentJSON.idbee);
             comment.persist(db);
         }
@@ -55,7 +56,7 @@ io.sockets.on('connection', function (socket) {
 
     // receive a user as a JSONObject to create a user
     socket.on('signUp', function (userJSON) {
-        var user = new User(userJSON.account, userJSON.password);
+        var user = new User(0, userJSON.account, userJSON.password);
         user.persist(db, socket);
     });
 
